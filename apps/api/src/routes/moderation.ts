@@ -3,7 +3,7 @@
  * Audit trail and content moderation management
  * Admin/Moderator only
  */
-import { Router, Request, Response } from 'express'
+import { Router, Response } from 'express'
 import { AuthRequest, authMiddleware } from '../middleware/auth.js'
 import { getPrismaClient } from '../services/prisma.js'
 import { logger } from '../utils/logger.js'

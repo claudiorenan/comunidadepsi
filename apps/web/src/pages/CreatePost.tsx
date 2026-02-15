@@ -7,7 +7,6 @@ import { useToast } from '../components/Toast'
 
 export function CreatePost() {
   const navigate = useNavigate()
-  const { user } = useAuth()
   const { addToast } = useToast()
 
   const [formData, setFormData] = useState({
@@ -19,7 +18,6 @@ export function CreatePost() {
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [contentSafetyWarning, setContentSafetyWarning] = useState<any>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -47,7 +45,6 @@ export function CreatePost() {
     try {
       setLoading(true)
       setError('')
-      setContentSafetyWarning(null)
 
       const tags = formData.tags
         .split(',')

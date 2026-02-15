@@ -1,8 +1,7 @@
 /**
  * Posts routes
  */
-import { Router, Request, Response } from 'express'
-import { CommentStatus } from '@prisma/client'
+import { Router, Response } from 'express'
 import { AuthRequest, authMiddleware, optionalAuth } from '../middleware/auth.js'
 import { SafetyRequest } from '../middleware/contentSafetyCheck.js'
 import { getPrismaClient } from '../services/prisma.js'
@@ -168,7 +167,7 @@ router.get('/:id', optionalAuth, async (req: AuthRequest, res: Response): Promis
           }
         },
         comments: {
-          where: { status: CommentStatus.PUBLISHED },
+          where: { status: 'published' },
           include: {
             author: {
               select: {

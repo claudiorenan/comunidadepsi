@@ -19,7 +19,7 @@ export function getPrismaClient(): PrismaClient {
 
     // Log queries in development
     if (process.env.NODE_ENV === 'development') {
-      prisma.$on('query', (e) => {
+      prisma.$on('query', (e: any) => {
         logger.debug(`Query: ${e.query}`)
         logger.debug(`Duration: ${e.duration}ms`)
       })

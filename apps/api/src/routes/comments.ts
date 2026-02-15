@@ -5,7 +5,7 @@ import { Router, Request, Response } from 'express'
 import { AuthRequest, authMiddleware } from '../middleware/auth.js'
 import { getPrismaClient } from '../services/prisma.js'
 import { logger } from '../utils/logger.js'
-import { UserRole, CommentStatus } from 'shared/types'
+import { UserRole } from 'shared/types'
 
 const router = Router()
 
@@ -39,7 +39,7 @@ router.get('/posts/:postId/comments', async (req: Request, res: Response): Promi
     const items = await prisma.comment.findMany({
       where: {
         postId,
-        status: CommentStatus.PUBLISHED
+        status: 'published'
       },
       include: {
         author: {
@@ -59,7 +59,7 @@ router.get('/posts/:postId/comments', async (req: Request, res: Response): Promi
     const total = await prisma.comment.count({
       where: {
         postId,
-        status: CommentStatus.PUBLISHED
+        status: 'published'
       }
     })
 
@@ -117,7 +117,7 @@ router.post('/posts/:postId/comments', authMiddleware, async (req: AuthRequest, 
         postId,
         authorId: req.user!.userId,
         content,
-        status: CommentStatus.PUBLISHED
+        status: 'published'
       },
       include: {
         author: {

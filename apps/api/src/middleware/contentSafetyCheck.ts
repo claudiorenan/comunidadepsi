@@ -2,12 +2,13 @@
  * Content Safety Check Middleware
  * Scans content for sensitive data before POST/PATCH operations
  */
-import { Request, Response, NextFunction } from 'express'
+import { Response, NextFunction } from 'express'
+import { AuthRequest } from './auth.js'
 import { getContentSafetyScanner } from '../services/contentSafety.js'
 import { logger } from '../utils/logger.js'
 import { RiskLevel } from 'shared/types'
 
-export interface SafetyRequest extends Request {
+export interface SafetyRequest extends AuthRequest {
   contentSafetyResult?: any
 }
 

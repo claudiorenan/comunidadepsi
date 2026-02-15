@@ -87,7 +87,7 @@ export const mockComment = {
   updatedAt: new Date()
 }
 
-export const createMockAuthToken = (userId: string = 'user_1', role: string = 'psychologist') => {
+export const createMockAuthToken = (userId: string = 'user_1') => {
   // Note: In real tests, use jwt.sign with test secret
   return 'mock_token_' + userId
 }
