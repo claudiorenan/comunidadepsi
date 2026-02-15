@@ -1,0 +1,22 @@
+# ComunidadePsi Frontend Dockerfile
+
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy root and workspaces
+COPY package.json package-lock.json ./
+COPY apps/web ./apps/web
+COPY packages/shared ./packages/shared
+
+# Install dependencies
+RUN npm ci
+
+# Build shared package
+RUN npm run build -w packages/shared
+
+# Expose web port
+EXPOSE 5173
+
+# Default command
+CMD ["npm", "run", "dev", "-w", "apps/web"]
