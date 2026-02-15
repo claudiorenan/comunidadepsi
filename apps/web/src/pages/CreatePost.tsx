@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { api } from '../services/api'
 import { Header } from '../components/Header'
-import { useAuth } from '../hooks/useAuth'
 import { useToast } from '../components/Toast'
 
 export function CreatePost() {
@@ -60,7 +59,6 @@ export function CreatePost() {
 
       // Check for content safety warnings
       if (response.data.contentSafetyWarning) {
-        setContentSafetyWarning(response.data.contentSafetyWarning)
         addToast('⚠️ Seu post foi publicado mas contém dados que requerem revisão', 'warning')
       } else {
         addToast('✅ Post publicado com sucesso!', 'success')

@@ -16,9 +16,9 @@ export function Profile() {
       <main className="max-w-2xl mx-auto px-4 py-8">
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="flex items-start gap-6 mb-8">
-            {user.photoUrl ? (
+            {user.photo ? (
               <img
-                src={user.photoUrl}
+                src={user.photo}
                 alt={user.name}
                 className="w-24 h-24 rounded-full object-cover"
               />
@@ -48,10 +48,10 @@ export function Profile() {
             </div>
           </div>
 
-          {user.bio && (
+          {user.introduction && (
             <div className="mb-8 pb-8 border-b border-gray-200">
               <h2 className="text-lg font-bold text-gray-900 mb-2">Biografia</h2>
-              <p className="text-gray-700 whitespace-pre-wrap">{user.bio}</p>
+              <p className="text-gray-700 whitespace-pre-wrap">{user.introduction}</p>
             </div>
           )}
 

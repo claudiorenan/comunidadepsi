@@ -2,14 +2,17 @@ import { createContext, useState, useEffect, ReactNode } from 'react'
 
 export interface User {
   id: string
-  externalId: string
+  email: string
   name: string
   crp: string
-  approach: string
-  uf: string
+  phone?: string
+  photo?: string
+  introduction?: string
+  instagram?: string
+  specialty?: string
+  approach?: string
+  uf?: string
   city?: string
-  photoUrl?: string
-  bio?: string
   role: string
 }
 
@@ -17,19 +20,20 @@ export interface AuthContextType {
   user: User | null
   loading: boolean
   error: string | null
-  login: (code: string) => Promise<void>
+  login: (email: string, password: string) => Promise<void>
   logout: () => void
-  refreshToken: (refreshToken: string) => Promise<string>
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined)
+
+const API_URL = (import.meta.env.VITE_API_URL as string) || 'http://localhost:6000'
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  // Load user from localStorage and validate token
+  // Load user from localStorage and validate token on mount
   useEffect(() => {
     const initAuth = async () => {
       try {
@@ -39,8 +43,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           return
         }
 
-        // Fetch user profile
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/auth/me`, {
+        // Fetch user profile with token
+        const response = await fetch(`${API_URL}/auth/me`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -48,8 +52,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         if (response.ok) {
           const data = await response.json()
-          setUser(data.user)
+          setUser(data)
         } else {
+          // Token is invalid, clear storage
           localStorage.removeItem('accessToken')
           localStorage.removeItem('refreshToken')
         }
@@ -63,25 +68,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     initAuth()
   }, [])
 
-  const login = async (code: string) => {
+  const login = async (email: string, password: string) => {
     try {
       setError(null)
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/auth/login`, {
+      const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code })
+        body: JSON.stringify({ email, password, device_name: 'web' })
       })
 
       if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.error || 'Login failed')
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Login failed')
       }
 
       const data = await response.json()
-      setUser(data.user)
-      localStorage.setItem('accessToken', data.accessToken)
-      if (data.refreshToken) {
-        localStorage.setItem('refreshToken', data.refreshToken)
+
+      // data should have { token, user }
+      if (data.token && data.user) {
+        setUser(data.user)
+        localStorage.setItem('accessToken', data.token)
+      } else if (data.accessToken && data.user) {
+        // Alternative format
+        setUser(data.user)
+        localStorage.setItem('accessToken', data.accessToken)
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Login failed'
@@ -96,24 +106,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem('refreshToken')
   }
 
-  const refreshToken = async (refreshToken: string): Promise<string> => {
-    const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/auth/refresh`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ refreshToken })
-    })
-
-    if (!response.ok) {
-      throw new Error('Token refresh failed')
-    }
-
-    const data = await response.json()
-    localStorage.setItem('accessToken', data.accessToken)
-    return data.accessToken
-  }
-
   return (
-    <AuthContext.Provider value={{ user, loading, error, login, logout, refreshToken }}>
+    <AuthContext.Provider value={{ user, loading, error, login, logout }}>
       {children}
     </AuthContext.Provider>
   )
