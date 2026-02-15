@@ -52,7 +52,7 @@ router.get('/', optionalAuth, async (req: AuthRequest, res: Response): Promise<v
             id: true,
             name: true,
             crp: true,
-            photoUrl: true,
+            photo: true,
             approach: true
           }
         }
@@ -124,7 +124,7 @@ router.post('/', authMiddleware, async (req: SafetyRequest, res: Response): Prom
             id: true,
             name: true,
             crp: true,
-            photoUrl: true,
+            photo: true,
             approach: true
           }
         }
@@ -161,7 +161,7 @@ router.get('/:id', optionalAuth, async (req: AuthRequest, res: Response): Promis
             id: true,
             name: true,
             crp: true,
-            photoUrl: true,
+            photo: true,
             approach: true,
             uf: true
           }
@@ -173,7 +173,7 @@ router.get('/:id', optionalAuth, async (req: AuthRequest, res: Response): Promis
               select: {
                 id: true,
                 name: true,
-                photoUrl: true
+                photo: true
               }
             }
           },
@@ -246,7 +246,7 @@ router.patch('/:id', authMiddleware, async (req: AuthRequest, res: Response): Pr
             id: true,
             name: true,
             crp: true,
-            photoUrl: true,
+            photo: true,
             approach: true
           }
         }

@@ -46,7 +46,7 @@ router.get('/posts/:postId/comments', async (req: Request, res: Response): Promi
           select: {
             id: true,
             name: true,
-            photoUrl: true,
+            photo: true,
             crp: true
           }
         }
@@ -124,7 +124,7 @@ router.post('/posts/:postId/comments', authMiddleware, async (req: AuthRequest, 
           select: {
             id: true,
             name: true,
-            photoUrl: true,
+            photo: true,
             crp: true
           }
         }
@@ -191,7 +191,7 @@ router.patch('/:id', authMiddleware, async (req: AuthRequest, res: Response): Pr
           select: {
             id: true,
             name: true,
-            photoUrl: true,
+            photo: true,
             crp: true
           }
         }

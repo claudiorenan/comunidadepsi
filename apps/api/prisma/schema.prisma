@@ -13,14 +13,18 @@ datasource db {
 // User (Psychologist)
 model User {
   id        String   @id @default(cuid())
-  externalId String  @unique
+  email     String   @unique
+  password  String
   name      String
   crp       String   @unique
-  approach  String
-  uf        String
+  phone     String?
+  photo     String?
+  introduction String?
+  instagram String?
+  specialty String?
+  approach  String?
+  uf        String?
   city      String?
-  photoUrl  String?
-  bio       String?
   role      String   @default("psychologist")
 
   // Relations
@@ -32,7 +36,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([externalId])
+  @@index([email])
   @@index([role])
 }
 

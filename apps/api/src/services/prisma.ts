@@ -9,22 +9,7 @@ let prisma: PrismaClient | null = null
 
 export function getPrismaClient(): PrismaClient {
   if (!prisma) {
-    prisma = new PrismaClient({
-      log: [
-        { level: 'query', emit: 'event' },
-        { level: 'error', emit: 'stderr' },
-        { level: 'warn', emit: 'stderr' }
-      ]
-    })
-
-    // Log queries in development
-    if (process.env.NODE_ENV === 'development') {
-      prisma.$on('query', (e: any) => {
-        logger.debug(`Query: ${e.query}`)
-        logger.debug(`Duration: ${e.duration}ms`)
-      })
-    }
-
+    prisma = new PrismaClient()
     logger.info('Prisma Client initialized')
   }
 

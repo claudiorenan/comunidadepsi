@@ -16,6 +16,7 @@ import { contentSafetyCheckMiddleware } from './middleware/contentSafetyCheck.js
 // Routes
 import healthRouter from './routes/health.js'
 import authRouter from './routes/auth.js'
+import usersRouter from './routes/users.js'
 import postsRouter from './routes/posts.js'
 import commentsRouter from './routes/comments.js'
 import moderationRouter from './routes/moderation.js'
@@ -52,6 +53,7 @@ app.use((req, _res, next) => {
 // Routes
 app.use('/health', healthRouter)
 app.use('/auth', authRouter)
+app.use('/users', usersRouter)
 app.use('/posts', postsRouter)
 app.use('/comments', commentsRouter)
 app.use('/moderation', moderationRouter)

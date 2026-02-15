@@ -1,14 +1,18 @@
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "externalId" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "crp" TEXT NOT NULL,
-    "approach" TEXT NOT NULL,
-    "uf" TEXT NOT NULL,
+    "phone" TEXT,
+    "photo" TEXT,
+    "introduction" TEXT,
+    "instagram" TEXT,
+    "specialty" TEXT,
+    "approach" TEXT,
+    "uf" TEXT,
     "city" TEXT,
-    "photoUrl" TEXT,
-    "bio" TEXT,
     "role" TEXT NOT NULL DEFAULT 'psychologist',
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL
@@ -74,13 +78,13 @@ CREATE TABLE "ModerationAction" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_externalId_key" ON "User"("externalId");
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_crp_key" ON "User"("crp");
 
 -- CreateIndex
-CREATE INDEX "User_externalId_idx" ON "User"("externalId");
+CREATE INDEX "User_email_idx" ON "User"("email");
 
 -- CreateIndex
 CREATE INDEX "User_role_idx" ON "User"("role");

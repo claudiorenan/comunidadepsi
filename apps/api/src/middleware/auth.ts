@@ -9,7 +9,7 @@ import { AppError, UserRole } from 'shared/types'
 export interface AuthRequest extends Request {
   user?: {
     userId: string
-    externalId: string
+    email: string
     role: UserRole
   }
 }
@@ -26,7 +26,7 @@ export const authMiddleware = (req: AuthRequest, res: Response, next: NextFuncti
 
     req.user = {
       userId: decoded.userId,
-      externalId: decoded.externalId,
+      email: decoded.email,
       role: decoded.role
     }
 
@@ -57,7 +57,7 @@ export const optionalAuth = (req: AuthRequest, _res: Response, next: NextFunctio
       const decoded = jwt.verify(token, config.jwt.secret) as any
       req.user = {
         userId: decoded.userId,
-        externalId: decoded.externalId,
+        email: decoded.email,
         role: decoded.role
       }
     }
