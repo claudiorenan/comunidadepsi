@@ -71,7 +71,7 @@ async function main() {
       title: 'Desafio: Tratamento de Ansiedade em Adolescentes',
       content:
         'Estou enfrentando dificuldades em estabelecer rapport com um adolescente de 16 anos que sofre de transtorno de ansiedade generalizada. O paciente se mostra resistente às técnicas de respiração e mindfulness tradicionais. Qual seria a melhor abordagem para engajá-lo?',
-      tags: ['ansiedade', 'adolescentes', 'rapport', 'tcc']
+      tags: JSON.stringify(['ansiedade', 'adolescentes', 'rapport', 'tcc'])
     }
   })
 
@@ -82,7 +82,7 @@ async function main() {
       title: 'Debate: Psicodrama vs CBT para relacionamentos tóxicos',
       content:
         'Qual abordagem é mais efetiva para casais com histórico de relacionamentos tóxicos? Psicodrama permite reviver cenas do passado, enquanto CBT trabalha em pensamentos automáticos. Gostaria de ouvir experiências de vocês.',
-      tags: ['psicodrama', 'terapia-casal', 'relacionamentos', 'metodologia']
+      tags: JSON.stringify(['psicodrama', 'terapia-casal', 'relacionamentos', 'metodologia'])
     }
   })
 
@@ -93,7 +93,7 @@ async function main() {
       title: 'Dificuldade com paciente que evita falar sobre trauma',
       content:
         'Tenho um paciente que foi vítima de violência sexual, mas recusa-se a abordar o assunto. Como lidar com essa resistência sem forçar a abertura?',
-      tags: ['trauma', 'segurança-psicológica', 'resistência']
+      tags: JSON.stringify(['trauma', 'segurança-psicológica', 'resistência'])
     }
   })
 

@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -17,10 +17,10 @@ model User {
   name      String
   crp       String   @unique
   approach  String
-  uf        String   @db.Char(2)
+  uf        String
   city      String?
   photoUrl  String?
-  bio       String?  @db.Text
+  bio       String?
   role      String   @default("psychologist")
 
   // Relations
@@ -43,9 +43,9 @@ model Post {
   author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   type      String   // 'challenge' | 'debate'
-  title     String   @db.VarChar(200)
-  content   String   @db.Text
-  tags      String[] // JSON array of tags
+  title     String
+  content   String
+  tags      String   @default("[]") // JSON array of tags, stored as string
   status    String   @default("published") // 'published' | 'hidden' | 'removed' | 'pending_review'
 
   // Relations
@@ -69,7 +69,7 @@ model Comment {
   authorId  String
   author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
-  content   String   @db.Text
+  content   String
   status    String   @default("published") // 'published' | 'hidden' | 'removed'
 
   // Relations
@@ -93,7 +93,7 @@ model Report {
   reporter      User     @relation(fields: [reporterId], references: [id], onDelete: Cascade)
 
   reason        String   // 'sensitive_data' | 'unethical' | 'harassment' | 'other'
-  details       String?  @db.Text
+  details       String?
   status        String   @default("open") // 'open' | 'under_review' | 'resolved' | 'dismissed'
 
   // Polymorphic relations (manual)
@@ -128,7 +128,7 @@ model ModerationAction {
   reportId    String?
   report      Report?  @relation(fields: [reportId], references: [id], onDelete: SetNull)
 
-  notes       String?  @db.Text
+  notes       String?
 
   createdAt   DateTime @default(now())
 
